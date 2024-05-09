@@ -4,7 +4,15 @@ Database access functions for Movie Watchlist app
 - Store the movies a user has seen out of all movies in the database.
 - Add a new user to keep track of their watched movies.
 
+Database functions
 
+One time actions:
+    create db
+        movie_watch
+    create tables
+        movies
+
+User menu actions
 1) Add new movie.
 2) View upcoming movies.
 3) View all movies
@@ -16,18 +24,16 @@ Database access functions for Movie Watchlist app
 
 import sqlite3
 
+########  CREATE DATABASE AND TABLES 
 # Create connection to movie_watch database
 conn = sqlite3.Connection('movie_watch.sqlite')
 
 # Create movie table
-# create_movies_table_query = """
-# CREATE TABLE IF NOT EXISTS movies (
-#     name TEXT,
-#     release_date TEXT
-# );
-# """
+conn.execute( """CREATE TABLE IF NOT EXISTS movies 
+             ( title TEXT, 
+              release_date TEXT,
+              watched INTEGER);"""
+              )
 
-conn.execute("CREATE TABLE IF NOT EXISTS movies ( name TEXT, release_date TEXT );")
 
-# Create user table
 

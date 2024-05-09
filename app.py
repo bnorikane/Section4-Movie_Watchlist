@@ -6,6 +6,8 @@ The project we'll be building in this section is a movie watchlist app. By the e
 - Keep track of movies they're interested in and their release dates.
 - Store the movies a user has seen out of all movies in the database.
 - Add a new user to keep track of their watched movies.
+
+STAGE 1 - STORE AND RETRIEVE WATCHED MOVIES
 """
 
 import sqlite3
