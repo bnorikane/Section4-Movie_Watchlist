@@ -13,8 +13,9 @@ STAGE 1 - STORE AND RETRIEVE WATCHED MOVIES
 """
 
 import sqlite3
+import datetime
 
-from database import setup_movie_watch_db
+import database
 
 #### CONTSTANTS
 
@@ -33,29 +34,34 @@ Please select one of the following options:
 
 your selection: """
 
+print(welcome_text)
+database.create_tables()
+
 #### FUNCTIONS
 
 # 1) Add new movie
 def prompt_add_movie():
     # get new movie entry from user
-    movie_name = input("\n\tEnter Movie name: ")
+    movie_title = input("\n\tEnter Movie title: ")
     release_date = input("\tEnter release date (dd-mm-YYYY): ")
+    parsed_date = datetime.datetime.strptime(release_date, "%d-%m-%Y" )
+    timestamp = parsed_date.timestamp()
+
     # add new movie to database
-    print(f"\n\tMovie name: {movie_name} \nRelease date: {release_date}")
+    database.add_movie(movie_title, timestamp)
     
 # 2) View upcoming movies
 def view_upcoming_movies():
-    # get upcoming movies from db
-    pass
+    upcoming_movies = database.get_movies(upcoming=True)
     # display upcoming movies
-    print("\n\tdisplay upcoming movies")
+    print("\n\tdisplay upcoming movies", upcoming_movies)
 
 # 3) View all movies
 def view_all_movies():
     # get all movies from db
-    pass
+    all_movies = database.get_movies()
     # display all movies
-    print("\n\tdisplay all movies")
+    print("\n\tdisplay all movies", all_movies)
 
 # 4) Add watched movie
 def prompt_watched_movie():
@@ -84,8 +90,10 @@ def prompt_add_user():
 
 #### MAIN
 
-# Setup movie_watch database and get connection
-conn = setup_movie_watch_db('movie_watch.sqlite')
+# Create database connection
+connection = sqlite3.connect("data.db")
+# Create tables in db
+database.create_tables()
 
 # Show menu and get user response
 while (user_input := input(menu_text)) != '7':
