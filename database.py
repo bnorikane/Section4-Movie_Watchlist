@@ -25,15 +25,23 @@ User menu actions
 import sqlite3
 
 ########  CREATE DATABASE AND TABLES 
-# Create connection to movie_watch database
-conn = sqlite3.Connection('movie_watch.sqlite')
 
-# Create movie table
-conn.execute( """CREATE TABLE IF NOT EXISTS movies 
-             ( title TEXT, 
-              release_date TEXT,
-              watched INTEGER);"""
-              )
+def setup_movie_watch_db(dbname):
+    # Create connection to movie_watch database
+    conn = sqlite3.Connection(dbname)
+
+    # Create movie table
+    conn.execute( """CREATE TABLE IF NOT EXISTS movies 
+                ( title TEXT, 
+                release_date REAL,
+                watched INTEGER);"""
+                )
+    return conn
+
+########  PERFORM DATABASE ACTIONS IN RESPONSE TO USER MENU SELECTIONS
+
+# 1) Add new movie
+
 
 
 

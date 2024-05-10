@@ -8,11 +8,13 @@ The project we'll be building in this section is a movie watchlist app. By the e
 - Add a new user to keep track of their watched movies.
 
 STAGE 1 - STORE AND RETRIEVE WATCHED MOVIES
+- Single user and single table
+- movies table (title, released_date, watched)
 """
 
 import sqlite3
 
-import database
+from database import setup_movie_watch_db
 
 #### CONTSTANTS
 
@@ -81,6 +83,9 @@ def prompt_add_user():
 
 
 #### MAIN
+
+# Setup movie_watch database and get connection
+conn = setup_movie_watch_db('movie_watch.sqlite')
 
 # Show menu and get user response
 while (user_input := input(menu_text)) != '7':
