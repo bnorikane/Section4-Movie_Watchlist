@@ -22,26 +22,42 @@ User menu actions
 7) Exit.
 """
 
+import datetime
 import sqlite3
 
 ########  CREATE DATABASE AND TABLES 
 
-def setup_movie_watch_db(dbname):
-    # Create connection to movie_watch database
-    conn = sqlite3.Connection(dbname)
+# Define query strings
+CREATE_MOVIES_TABLE = """CREATE TABLE IF NOT EXISTS movies (
+    title TEXT, 
+    release_timestamp REAL,
+    watched INTEGER
+);"""
 
-    # Create movie table
-    conn.execute( """CREATE TABLE IF NOT EXISTS movies 
-                ( title TEXT, 
-                release_date REAL,
-                watched INTEGER);"""
-                )
-    return conn
+INSERT_MOVIE = "INSERT INTO movies (title, release_timestamp, watched) VALUES (?, ?, 0);"
+SELECT_ALL_MOVIES = "SELECT * FROM movies;"
+SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
+SELECT_WATCHED_MOVIES = "SELECT * FROM movies WHERE watched = 1;"
+
+# Create database connection
+
+connection = sqlite3.connect("data.db")
+
+# Create tables in db
+def create_tables():
+    pass
 
 ########  PERFORM DATABASE ACTIONS IN RESPONSE TO USER MENU SELECTIONS
 
-# 1) Add new movie
+def add_movie(title, release_timestamp):
+    pass
 
+def get_movies(upcoming=False):
+    pass
 
+def watch_movie(movie_title):
+    pass
 
+def get_watched_movies():
+    pass
 
