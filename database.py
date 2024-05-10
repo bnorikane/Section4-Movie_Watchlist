@@ -68,6 +68,7 @@ def get_movies(upcoming=False):
 
 # add a new movie to the movies files
 def watch_movie(movie_title):
+    print(movie_title, type(movie_title))
     with connection:
         connection.execute(SET_MOVIE_WATCHED, (movie_title, ))
 

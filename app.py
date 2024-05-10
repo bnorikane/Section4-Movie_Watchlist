@@ -66,16 +66,16 @@ def view_all_movies():
 # 4) Add watched movie
 def prompt_watched_movie():
     # get watched movie from user
-    movie_name = input("\nEnter Movie name: ")
+    movie_title = input("\nEnter Movie title: ")
     # update movie to watched status in db
-    print(f"\n\tUpdate Movie name: {movie_name} to watched status")
+    database.watch_movie(movie_title)
 
 # 5) View watched movies
 def view_watched_movies():
     # get all movies from db
-    pass
+    watched_movies = database.get_watched_movies()
     # display all movies
-    print("\n\tdisplay watched movies")
+    print("\n\tdisplay watched movies", watched_movies)
 
 # 6) Add user to the app
 def prompt_add_user():
