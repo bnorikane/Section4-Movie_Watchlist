@@ -10,6 +10,11 @@ The project we'll be building in this section is a movie watchlist app. By the e
 STAGE 1 - STORE AND RETRIEVE WATCHED MOVIES
 - Single user and single table
 - movies table (title, released_date, watched)
+
+STAGE 2 - ADD MULTIUSER WATCHLISTS
+- Separate movies and watchlist tables - imperfect
+- watched table (watcher_name TEXT, title TEXT)
+- movies table (title TEXT, release_timestamp REAL)
 """
 
 import sqlite3
