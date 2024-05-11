@@ -53,16 +53,12 @@ def prompt_add_movie():
 # 2) View upcoming movies
 def view_upcoming_movies():
     upcoming_movies = database.get_movies(upcoming=True)
-    # display upcoming movies
-    # print("\n\tdisplay upcoming movies", upcoming_movies)
     print_movie_list("Upcoming", upcoming_movies)
 
 # 3) View all movies
 def view_all_movies():
     # get all movies from db
     all_movies = database.get_movies()
-    # display all movies
-    # print("\n\tdisplay all movies", all_movies)
     print_movie_list("All", all_movies)
 
 # 4) Add watched movie
@@ -76,8 +72,6 @@ def prompt_watched_movie():
 def view_watched_movies():
     # get all movies from db
     watched_movies = database.get_watched_movies()
-    # display all movies
-    # print("\n\tdisplay watched movies", watched_movies)
     print_movie_list("Watched", watched_movies)
 
 # 6) Add user to the app
@@ -96,7 +90,8 @@ def print_movie_list(heading, movies):
     for movie in movies:
         movie_date = datetime.datetime.fromtimestamp(movie[1])
         human_date = movie_date.strftime("%d %b %Y")
-        print(f"{movie[0]} (on {human_date})")
+        print(f'"{movie[0]}" released on {human_date}'
+        )
     print("---- \n")
 
 
