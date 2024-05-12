@@ -103,7 +103,7 @@ def print_movie_list(heading, movies):
 
 # print watched movies
 def print_watched_movies(username, watched_movies):
-    print(f"---- {username} Movies ----")
+    print(f"---- {username}'s Watched Movies ----")
     for watched in watched_movies:
         print(f'"{watched[1]}" watched by {watched[0]}'
         )
