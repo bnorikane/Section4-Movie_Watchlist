@@ -30,8 +30,7 @@ import sqlite3
 # Define query strings
 CREATE_MOVIES_TABLE = """CREATE TABLE IF NOT EXISTS movies (
     title TEXT, 
-    release_timestamp REAL,
-    watched INTEGER
+    release_timestamp REAL
 );"""
 
 CREATE_WATCHED_TABLE = """CREATE TABLE IF NOT EXISTS watched (
@@ -39,11 +38,11 @@ CREATE_WATCHED_TABLE = """CREATE TABLE IF NOT EXISTS watched (
     title TEXT
 );"""
 
-INSERT_MOVIE = "INSERT INTO movies (title, release_timestamp, watched) VALUES (?, ?, 0);"
+INSERT_MOVIE = "INSERT INTO movies (title, release_timestamp) VALUES (?, ?);"
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
-SELECT_WATCHED_MOVIES = "SELECT * FROM movies WHERE watched = 1;"
-SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
+SELECT_WATCHED_MOVIES = "SELECT * FROM watched;"
+SET_MOVIE_WATCHED = "INSERT INTO watched (watcher_name, title) VALUES (?, ?);"
 
 # Create database connection
 
@@ -73,11 +72,12 @@ def get_movies(upcoming=False):
         return cursor.fetchall()
 
 # add a new movie to the movies files
-def watch_movie(movie_title):
-    print(movie_title, type(movie_title))
+def watch_movie(watcher_name, movie_title):
+    # print(movie_title, type(watcher_name, movie_title))
     with connection:
-        connection.execute(SET_MOVIE_WATCHED, (movie_title, ))
+        connection.execute(SET_MOVIE_WATCHED, (watcher_name, movie_title ))
 
+# get all watched movies by all watchers
 def get_watched_movies():
     with connection:
         cursor = connection.cursor()

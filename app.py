@@ -69,15 +69,16 @@ def view_all_movies():
 # 4) Add watched movie
 def prompt_watched_movie():
     # get watched movie from user
+    watcher_name = input("\nEnter watcher's name: ")
     movie_title = input("\nEnter Movie title: ")
     # update movie to watched status in db
-    database.watch_movie(movie_title)
+    database.watch_movie(watcher_name, movie_title)
 
 # 5) View watched movies
 def view_watched_movies():
     # get all movies from db
     watched_movies = database.get_watched_movies()
-    print_movie_list("Watched", watched_movies)
+    print_watched_movies("Watched", watched_movies)
 
 # 6) Add user to the app
 def prompt_add_user():
@@ -98,6 +99,17 @@ def print_movie_list(heading, movies):
         print(f'"{movie[0]}" released on {human_date}'
         )
     print("---- \n")
+
+# print watched movies
+def print_watched_movies(heading, watched_movies):
+    print(f"---- {heading} Movies ----")
+    for watched in watched_movies:
+        # movie_date = datetime.datetime.fromtimestamp(movie[1])
+        # human_date = movie_date.strftime("%d %b %Y")
+        print(f'"{watched[1]}" watched by {watched[0]}'
+        )
+    print("---- \n")
+
 
 
 #### MAIN
