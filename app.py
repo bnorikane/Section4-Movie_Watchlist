@@ -15,7 +15,28 @@ STAGE 2 - ADD MULTIUSER WATCHLISTS
 - Separate movies and watchlist tables - imperfect
 - watched table (username TEXT, title TEXT)
 - movies table (title TEXT, release_timestamp REAL)
+
+STAGE 3 - MODEL MANY TO MANY RELATION
+- Separate movies, users and watched tables
+- Add unique ID's for users and movies
+- watched becomes a many to many join table
+- movies (id, title, release_timestamp)
+- users(username PRIMARY KEY)
+- watched(username, movies.id)
 """
+
+#### Stage 3 TO DO
+# Create users table query
+# Add users table query to create_tables()
+# modify movies table query
+# modify watched table query
+# modify INSERT_MOVIE query
+# modify print_movie_list function
+
+
+# USERS function
+# db access
+# UI
 
 import sqlite3
 import datetime
@@ -94,10 +115,10 @@ def prompt_add_user():
 # print list of movies
 def print_movie_list(heading, movies):
     print(f"-- {heading} Movies --")
-    for movie in movies:
-        movie_date = datetime.datetime.fromtimestamp(movie[1])
+    for _id, title, release_date in movies:
+        movie_date = datetime.datetime.fromtimestamp(release_date)
         human_date = movie_date.strftime("%d %b %Y")
-        print(f'"{movie[0]}" released on {human_date}'
+        print(f'{_id}: "{title} released on {human_date}'
         )
     print("---- \n")
 

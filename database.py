@@ -29,13 +29,21 @@ import sqlite3
 
 # Define query strings
 CREATE_MOVIES_TABLE = """CREATE TABLE IF NOT EXISTS movies (
+    id PRIMARY KEY,
     title TEXT, 
     release_timestamp REAL
 );"""
 
 CREATE_WATCHED_TABLE = """CREATE TABLE IF NOT EXISTS watched (
-    username TEXT,
-    title TEXT
+    user_username TEXT,
+    movie_id INTEGER,
+    FOREIGN KEY (user_username) REFERENCES users(username),
+    FOREIGN KEY (movie_id) REFERENCES movies(id)
+);"""
+
+# Create users table query
+CREATE_USERS_TABLE = """CREATE TABLE IF NOT EXISTS users (
+    username TEXT PRIMARY KEY
 );"""
 
 INSERT_MOVIE = "INSERT INTO movies (title, release_timestamp) VALUES (?, ?);"
@@ -53,6 +61,7 @@ def create_tables():
     with connection:
         connection.execute(CREATE_MOVIES_TABLE)
         connection.execute(CREATE_WATCHED_TABLE)
+        connection.execute(CREATE_USERS_TABLE)
 
 ########  PERFORM DATABASE ACTIONS IN RESPONSE TO USER MENU SELECTIONS
 
