@@ -9,11 +9,11 @@ The project we'll be building in this section is a movie watchlist app. By the e
 
 STAGE 1 - STORE AND RETRIEVE WATCHED MOVIES
 - Single user and single table
-- movies table (title, released_date, watched)
+- movies table (title, released_date)
 
 STAGE 2 - ADD MULTIUSER WATCHLISTS
 - Separate movies and watchlist tables - imperfect
-- watched table (watcher_name TEXT, title TEXT)
+- watched table (username TEXT, title TEXT)
 - movies table (title TEXT, release_timestamp REAL)
 """
 
@@ -69,16 +69,17 @@ def view_all_movies():
 # 4) Add watched movie
 def prompt_watched_movie():
     # get watched movie from user
-    watcher_name = input("\nEnter watcher's name: ")
+    username = input("\nEnter username: ")
     movie_title = input("\nEnter Movie title: ")
     # update movie to watched status in db
-    database.watch_movie(watcher_name, movie_title)
+    database.watch_movie(username, movie_title)
 
 # 5) View watched movies
 def view_watched_movies():
-    # get all movies from db
-    watched_movies = database.get_watched_movies()
-    print_watched_movies("Watched", watched_movies)
+    # get user's watched movies from db
+    username = input("\nEnter username: ")
+    watched_movies = database.get_watched_movies(username)
+    print_watched_movies(username, watched_movies)
 
 # 6) Add user to the app
 def prompt_add_user():
@@ -101,11 +102,9 @@ def print_movie_list(heading, movies):
     print("---- \n")
 
 # print watched movies
-def print_watched_movies(heading, watched_movies):
-    print(f"---- {heading} Movies ----")
+def print_watched_movies(username, watched_movies):
+    print(f"---- {username} Movies ----")
     for watched in watched_movies:
-        # movie_date = datetime.datetime.fromtimestamp(movie[1])
-        # human_date = movie_date.strftime("%d %b %Y")
         print(f'"{watched[1]}" watched by {watched[0]}'
         )
     print("---- \n")

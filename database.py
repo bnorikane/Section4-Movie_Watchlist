@@ -34,15 +34,15 @@ CREATE_MOVIES_TABLE = """CREATE TABLE IF NOT EXISTS movies (
 );"""
 
 CREATE_WATCHED_TABLE = """CREATE TABLE IF NOT EXISTS watched (
-    watcher_name TEXT,
+    username TEXT,
     title TEXT
 );"""
 
 INSERT_MOVIE = "INSERT INTO movies (title, release_timestamp) VALUES (?, ?);"
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
-SELECT_WATCHED_MOVIES = "SELECT * FROM watched;"
-SET_MOVIE_WATCHED = "INSERT INTO watched (watcher_name, title) VALUES (?, ?);"
+SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE username = ?;"
+SET_MOVIE_WATCHED = "INSERT INTO watched (username, title) VALUES (?, ?);"
 
 # Create database connection
 
@@ -77,10 +77,10 @@ def watch_movie(watcher_name, movie_title):
     with connection:
         connection.execute(SET_MOVIE_WATCHED, (watcher_name, movie_title ))
 
-# get all watched movies by all watchers
-def get_watched_movies():
+# get all watched movies by username
+def get_watched_movies(username):
     with connection:
         cursor = connection.cursor()
-        cursor.execute(SELECT_WATCHED_MOVIES)
+        cursor.execute(SELECT_WATCHED_MOVIES, (username,))
         return cursor.fetchall()
 
