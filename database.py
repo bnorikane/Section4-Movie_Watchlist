@@ -47,10 +47,12 @@ CREATE_USERS_TABLE = """CREATE TABLE IF NOT EXISTS users (
 );"""
 
 INSERT_MOVIE = "INSERT INTO movies (title, release_timestamp) VALUES (?, ?);"
+INSERT_USER = "INSERT INTO users (username) VALUES (?);"
 SELECT_ALL_MOVIES = "SELECT * FROM movies;"
 SELECT_UPCOMING_MOVIES = "SELECT * FROM movies WHERE release_timestamp > ?;"
 SELECT_WATCHED_MOVIES = "SELECT * FROM watched WHERE username = ?;"
-SET_MOVIE_WATCHED = "INSERT INTO watched (username, title) VALUES (?, ?);"
+INSERT_WATCHED_MOVIE = "INSERT INTO watched (user_username, movie_id) VALUES (?, ?);"
+# SET_MOVIE_WATCHED = "INSERT INTO watched (username, title) VALUES (?, ?);"
 
 # Create database connection
 
@@ -60,14 +62,18 @@ connection = sqlite3.connect("data.db")
 def create_tables():
     with connection:
         connection.execute(CREATE_MOVIES_TABLE)
-        connection.execute(CREATE_WATCHED_TABLE)
         connection.execute(CREATE_USERS_TABLE)
+        connection.execute(CREATE_WATCHED_TABLE)
 
 ########  PERFORM DATABASE ACTIONS IN RESPONSE TO USER MENU SELECTIONS
 
 def add_movie(title, release_timestamp):
     with connection:
         connection.execute(INSERT_MOVIE, (title, release_timestamp))
+
+def add_user(username):
+    with connection:
+        connection.execute(INSERT_USER, (username, ))
 
 # get all or upcoming movies
 def get_movies(upcoming=False):
@@ -80,11 +86,11 @@ def get_movies(upcoming=False):
             cursor.execute(SELECT_ALL_MOVIES)
         return cursor.fetchall()
 
-# add a new movie to the movies files
-def watch_movie(watcher_name, movie_title):
+# add a watched movie
+def watch_movie(username, movie_id):
     # print(movie_title, type(watcher_name, movie_title))
     with connection:
-        connection.execute(SET_MOVIE_WATCHED, (watcher_name, movie_title ))
+        connection.execute(INSERT_WATCHED_MOVIE, (username, movie_id))
 
 # get all watched movies by username
 def get_watched_movies(username):

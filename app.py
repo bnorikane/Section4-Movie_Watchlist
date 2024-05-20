@@ -91,9 +91,9 @@ def view_all_movies():
 def prompt_watched_movie():
     # get watched movie from user
     username = input("\nEnter username: ")
-    movie_title = input("\nEnter Movie title: ")
+    movie_id = input("\nEnter Movie id: ")
     # update movie to watched status in db
-    database.watch_movie(username, movie_title)
+    database.watch_movie(username, movie_id)
 
 # 5) View watched movies
 def view_watched_movies():
@@ -105,9 +105,10 @@ def view_watched_movies():
 # 6) Add user to the app
 def prompt_add_user():
     # get new user
-    user_name = input("\nEnter user name: ")
+    username = input("\nEnter user name: ")
     # add user to db
-    print(f"\n\tadd new user name: {user_name} to database")
+    # print(f"\n\tadd new user name: {user_name} to database")
+    database.add_user(username)
 
 # 7) Exit
     # Exit handled by walrus clause in while loop
@@ -157,7 +158,9 @@ while (user_input := input(menu_text)) != '7':
         prompt_watched_movie()
 
     elif user_input == "5":     # View watched movies
-        view_watched_movies()
+        username = input("Username: ")
+        movies = database.get_watched_movies(username)
+        print_watched_movies(username, movies)
 
     elif user_input == "6":     # Add user to the app
         prompt_add_user()

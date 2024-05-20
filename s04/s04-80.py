@@ -23,8 +23,8 @@ conn = sqlite3.Connection('s04-80.sqlite')
 
 # Create departments table
 with conn:
-    conn.execute("""CREATE TABLE IF NOT EXISTS departments 
-        ( id INTEGER PRIMARY KEY,
+    conn.execute("""CREATE TABLE IF NOT EXISTS departments ( 
+        id INTEGER PRIMARY KEY,
         name TEXT,
         department_lead TEXT        
         );""")
@@ -32,9 +32,9 @@ with conn:
 # Create employees table
 with conn:
     conn.execute("""CREATE TABLE IF NOT EXISTS employees (
-                 id INTEGER PRIMARY KEY,
-                 first_name TEXT,
-                 surname TEXT,
-                 department_id INTEGER,
-                 FOREIGN KEY (department_id) REFERENCES departments(id)
+        id INTEGER PRIMARY KEY,
+        first_name TEXT,
+        surname TEXT,
+        department_id INTEGER,
+        FOREIGN KEY (department_id) REFERENCES departments(id)
     );""")
